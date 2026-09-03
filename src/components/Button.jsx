@@ -22,8 +22,14 @@ export default function Button({
   const classes = cn(base, variants[variant], className)
 
   if (href) {
+    const isFile = Boolean(rest.download)
     return (
-      <a href={href} className={classes} {...rest}>
+      <a
+        href={href}
+        className={classes}
+        {...(isFile ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        {...rest}
+      >
         {children}
       </a>
     )

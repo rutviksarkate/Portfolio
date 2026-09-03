@@ -1,5 +1,3 @@
-import { site } from '../config/site.js'
-
 export function validateContact(values) {
   const errors = {}
 
@@ -15,12 +13,8 @@ export function validateContact(values) {
     errors.email = 'Enter a valid email address.'
   }
 
-  if (!values.projectType) {
-    errors.projectType = 'Select a project type.'
-  }
-
-  if (!values.budget) {
-    errors.budget = 'Select a budget range.'
+  if (!values.inquiryType) {
+    errors.inquiryType = 'Select why you are reaching out.'
   }
 
   if (!values.message.trim()) {
@@ -32,33 +26,9 @@ export function validateContact(values) {
   return errors
 }
 
-export const projectTypes = [
-  'Web Application',
-  'Full-Stack Development',
-  'Backend/API',
-  'Performance Optimization',
+export const inquiryTypes = [
+  'Freelance project',
+  'Full-time role',
+  'Contract / consulting',
   'Other',
 ]
-
-export const budgets = [
-  'Under ₹25,000',
-  '₹25,000 – ₹50,000',
-  '₹50,000 – ₹1,00,000',
-  '₹1,00,000+',
-  "Let's Discuss",
-]
-
-export function mailtoDraft(values) {
-  const subject = encodeURIComponent(`Project inquiry — ${values.projectType}`)
-  const body = encodeURIComponent(
-    [
-      `Name: ${values.name}`,
-      `Email: ${values.email}`,
-      `Project type: ${values.projectType}`,
-      `Budget: ${values.budget}`,
-      '',
-      values.message,
-    ].join('\n'),
-  )
-  return `mailto:${site.email}?subject=${subject}&body=${body}`
-}

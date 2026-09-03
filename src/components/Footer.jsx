@@ -1,4 +1,4 @@
-import { ArrowUp, Github, Linkedin, Mail, Phone } from 'lucide-react'
+import { ArrowUp, FileDown, Github, Linkedin, Mail, Phone } from 'lucide-react'
 import { site } from '../config/site.js'
 
 export default function Footer() {
@@ -50,14 +50,27 @@ export default function Footer() {
               <Linkedin size={18} />
             </a>
           )}
+          {site.resume?.href && (
+            <a
+              href={site.resume.href}
+              download={site.resume.filename}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={site.resume.label}
+              className="text-mute transition-colors hover:text-accent"
+            >
+              <FileDown size={18} />
+            </a>
+          )}
 
-          <a
-            href="#home"
+          <button
+            type="button"
             aria-label="Back to top"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="ml-2 flex h-8 w-8 items-center justify-center rounded-full border border-line text-mute transition-colors hover:border-accent/40 hover:text-accent"
           >
             <ArrowUp size={15} />
-          </a>
+          </button>
         </div>
       </div>
     </footer>

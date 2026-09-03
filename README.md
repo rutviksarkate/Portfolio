@@ -30,6 +30,7 @@ npm run preview   # preview the built site locally
 | What | File |
 |---|---|
 | Name, email, links, hero copy, availability | `src/config/site.js` |
+| Resume PDF | `public/Rutvik-Sarkate-Resume.pdf` |
 | Project cards | `src/data/projects.js` |
 | Work experience | `src/data/experience.js` |
 | Skills | `src/data/skills.js` |
@@ -44,9 +45,11 @@ npm run preview   # preview the built site locally
 2. Import it in `src/data/projects.js`.
 3. Set the `image` field on the matching project object.
 
-### Connecting the contact form
+### Contact form
 
-Set `site.form.endpoint` in `src/config/site.js` to a Formspree, Getform, or custom API URL. Until a backend endpoint is configured, the form opens the visitor's email client with a pre-filled message.
+Submissions are emailed to `site.email` via [FormSubmit](https://formsubmit.co). The first send only delivers an **Activate Form** email (check Spam and Promotions). After you click that link, later submissions arrive as normal messages.
+
+To use [Web3Forms](https://web3forms.com) instead, add `VITE_WEB3FORMS_ACCESS_KEY` to a `.env.local` file.
 
 ## Tech Stack
 

@@ -1,79 +1,58 @@
-import estateDeskImage from '../assets/projects/estate-desk.svg'
-import projectPlaceholder from '../assets/projects/project-placeholder.svg'
+import aptlyImage from '../assets/projects/aptly.svg'
+import forgeImage from '../assets/projects/knockout.png'
+import movieImage from '../assets/projects/movie-app.png'
+import pulseImage from '../assets/projects/pulseboard.svg'
+import shopImage from '../assets/projects/shopngo.png'
 
-/**
- * All project cards are driven from this file.
- *
- * To publish a project:
- * 1. Drop a screenshot into src/assets/projects/ (PNG/WebP preferred).
- * 2. Import it above and set `image`.
- * 3. Fill name, description, technologies.
- * 4. Add liveUrl / githubUrl only when the URLs are real.
- *
- * Leave name empty to render the “coming soon” placeholder card.
- */
+export function projectHref(project) {
+  return project.path || ''
+}
+
 const projects = [
   {
-    name: 'EstateDesk',
+    name: 'Harbor Shop',
     description:
-      'A real-estate-focused CRM/SaaS platform designed to help channel partners and brokers manage leads, projects, inventory, bookings, revenue and business operations.',
-    image: estateDeskImage,
-    technologies: [
-      'React.js',
-      'JavaScript',
-      'Node.js',
-      'Express.js',
-      'MongoDB',
-      'PostgreSQL',
-    ],
-    liveUrl: '',
-    githubUrl: '',
+      'A boutique storefront with lookbooks, saved pieces, finish options, promo codes, gift wrap, and order tracking.',
+    image: shopImage,
+    technologies: ['React', 'Vite', 'Tailwind CSS'],
+    path: '/work/harbor-shop',
     featured: true,
-    features: [
-      'Lead management',
-      'Project management',
-      'Inventory management',
-      'Booking management',
-      'Revenue tracking',
-      'User management',
-      'RBAC',
-      'Business workflows',
-    ],
+    features: ['Wishlist', 'Guest checkout', 'Promo codes', 'Order tracking'],
   },
   {
-    name: '',
-    description: '',
-    image: projectPlaceholder,
-    technologies: [],
-    liveUrl: '',
-    githubUrl: '',
+    name: 'PulseBoard',
+    description:
+      'A SaaS console: date-ranged metrics, CRM notes, plan changes, invoices, team, alerts, and workspace settings.',
+    image: pulseImage,
+    technologies: ['React', 'Vite', 'Tailwind CSS'],
+    path: '/work/pulseboard',
     featured: false,
   },
   {
-    name: '',
-    description: '',
-    image: projectPlaceholder,
-    technologies: [],
-    liveUrl: '',
-    githubUrl: '',
+    name: 'FrameVault',
+    description:
+      'A cinema house: profiles, continue watching, ratings, downloads, trailers, and a player with quality and subtitles.',
+    image: movieImage,
+    technologies: ['React', 'Vite', 'Tailwind CSS'],
+    path: '/work/framevault',
     featured: false,
   },
   {
-    name: '',
-    description: '',
-    image: projectPlaceholder,
-    technologies: [],
-    liveUrl: '',
-    githubUrl: '',
+    name: 'Forge Arena',
+    description:
+      'A live contest IDE: discussion, editorial, custom stdin, submit to the judge, and global or friends standings.',
+    image: forgeImage,
+    technologies: ['React', 'Vite', 'Tailwind CSS'],
+    path: '/work/forge-arena',
     featured: false,
   },
   {
-    name: '',
-    description: '',
-    image: projectPlaceholder,
-    technologies: [],
-    liveUrl: '',
-    githubUrl: '',
+    name: 'Aptly',
+    description:
+      'A studio booking product: two-week calendar, waitlist, gifts, reminders, payments, and reschedule from your visits.',
+    image: aptlyImage,
+    technologies: ['React', 'Vite', 'Tailwind CSS'],
+    path: '/work/aptly',
     featured: false,
   },
 ]

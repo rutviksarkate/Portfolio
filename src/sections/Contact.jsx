@@ -1,20 +1,20 @@
 import { motion } from 'framer-motion'
-import { CheckCircle, Github, Linkedin, Mail, Phone, Send } from 'lucide-react'
+import { CheckCircle, FileDown, Github, Linkedin, Mail, Phone, Send } from 'lucide-react'
 import { useCallback, useState } from 'react'
 import Button from '../components/Button.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
 import { site } from '../config/site.js'
 import cn from '../lib/cn.js'
 import { submitContact } from '../lib/submitContact.js'
-import { budgets, projectTypes, validateContact } from '../lib/validateContact.js'
+import { inquiryTypes, validateContact } from '../lib/validateContact.js'
 import { fadeUp, motionProps, stagger, usePrefersReducedMotion } from '../lib/useMotion.js'
 
 const empty = {
   name: '',
   email: '',
-  projectType: '',
-  budget: '',
+  inquiryType: '',
   message: '',
+  website: '',
 }
 
 function Field({ label, id, error, children }) {
@@ -64,19 +64,15 @@ export default function Contact() {
 
     setStatus('sending')
     try {
-      const result = await submitContact(values)
-      if (result.mode === 'mailto') {
-        setStatus('mailto')
-      } else {
-        setStatus('sent')
-      }
+      await submitContact(values)
+      setStatus('sent')
       setValues(empty)
-    } catch {
-      setStatus('error')
+    } catch (err) {
+      setStatus(err?.code === 'activation' ? 'activate' : 'error')
     }
   }
 
-  if (status === 'sent' || status === 'mailto') {
+  if (status === 'sent') {
     return (
       <section id="contact" className="border-t border-line bg-surface py-20 lg:py-28">
         <div className="mx-auto max-w-7xl px-5 lg:px-8">
@@ -86,13 +82,9 @@ export default function Contact() {
             {...motionProps(reduced)}
           >
             <CheckCircle size={48} className="mb-4 text-accent" />
-            <h2 className="text-2xl font-bold text-ink">
-              {status === 'sent' ? 'Message sent.' : 'Opening your email client.'}
-            </h2>
+            <h2 className="text-2xl font-bold text-ink">Message sent.</h2>
             <p className="mt-3 text-mute">
-              {status === 'sent'
-                ? "Thanks for reaching out. I'll review your message and get back to you."
-                : 'Complete and send the pre-filled email, and I\'ll get back to you.'}
+              Thanks for reaching out. I&apos;ll review your message and get back to you.
             </p>
             <Button
               className="mt-6"
@@ -112,8 +104,8 @@ export default function Contact() {
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHeading
           label="Contact"
-          title="Let's build something useful."
-          subtitle="Tell me what you're building, what problem you're trying to solve, and where you need technical help."
+          title="Let's work together."
+          subtitle="Freelance projects, contract work, or full-time roles — tell me what you're looking for and how I can help."
         />
 
         <motion.div
@@ -123,7 +115,7 @@ export default function Contact() {
         >
           <motion.form
             variants={fadeUp}
-            className="space-y-5 lg:col-span-3"
+            className="relative space-y-5 lg:col-span-3"
             onSubmit={handleSubmit}
             noValidate
           >
@@ -150,57 +142,60 @@ export default function Contact() {
               </Field>
             </div>
 
-            <div className="grid gap-5 sm:grid-cols-2">
-              <Field
-                label="Project Type"
-                id="projectType"
-                error={errors.projectType}
+            <Field label="I'm reaching out about" id="inquiryType" error={errors.inquiryType}>
+              <select
+                id="inquiryType"
+                className={cn(inputCls, !values.inquiryType && 'text-mute/50', errors.inquiryType && 'border-red-500/60')}
+                value={values.inquiryType}
+                onChange={set('inquiryType')}
               >
-                <select
-                  id="projectType"
-                  className={cn(inputCls, !values.projectType && 'text-mute/50', errors.projectType && 'border-red-500/60')}
-                  value={values.projectType}
-                  onChange={set('projectType')}
-                >
-                  <option value="">Select type</option>
-                  {projectTypes.map((t) => (
-                    <option key={t} value={t}>
-                      {t}
-                    </option>
-                  ))}
-                </select>
-              </Field>
-              <Field label="Budget" id="budget" error={errors.budget}>
-                <select
-                  id="budget"
-                  className={cn(inputCls, !values.budget && 'text-mute/50', errors.budget && 'border-red-500/60')}
-                  value={values.budget}
-                  onChange={set('budget')}
-                >
-                  <option value="">Select range</option>
-                  {budgets.map((b) => (
-                    <option key={b} value={b}>
-                      {b}
-                    </option>
-                  ))}
-                </select>
-              </Field>
-            </div>
+                <option value="">Select one</option>
+                {inquiryTypes.map((t) => (
+                  <option key={t} value={t}>
+                    {t}
+                  </option>
+                ))}
+              </select>
+            </Field>
 
             <Field label="Message" id="message" error={errors.message}>
               <textarea
                 id="message"
                 rows={5}
                 className={cn(inputCls, 'resize-y', errors.message && 'border-red-500/60')}
-                placeholder="Describe your project and what you need..."
+                placeholder="Share the role, project, or problem, and what you need from me..."
                 value={values.message}
                 onChange={set('message')}
               />
             </Field>
 
+            <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
+              <label htmlFor="website">Website</label>
+              <input
+                id="website"
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                value={values.website}
+                onChange={set('website')}
+              />
+            </div>
+
+            {status === 'activate' && (
+              <p className="text-sm text-amber-300" role="status">
+                FormSubmit emailed {site.email} an activation link. Check Inbox, Spam, and Promotions,
+                click Activate Form, then send again. After that, messages arrive as normal email.
+              </p>
+            )}
+
             {status === 'error' && (
               <p className="text-sm text-red-400" role="alert">
-                Something went wrong. Please try again or email me directly.
+                Couldn&apos;t send just now.{' '}
+                <a href={`mailto:${site.email}`} className="underline hover:text-accent">
+                  Email me directly
+                </a>
+                {' '}instead.
               </p>
             )}
 
@@ -212,12 +207,6 @@ export default function Contact() {
               <Send size={16} />
               {status === 'sending' ? 'Sending…' : 'Send Message'}
             </Button>
-
-            {!site.form.endpoint && (
-              <p className="text-xs text-mute/60">
-                This opens your default email client with a pre-filled message.
-              </p>
-            )}
           </motion.form>
 
           <motion.div variants={fadeUp} className="space-y-6 lg:col-span-2">
@@ -260,6 +249,19 @@ export default function Contact() {
               >
                 <Linkedin size={18} className="shrink-0 text-accent" />
                 LinkedIn
+              </a>
+            )}
+
+            {site.resume?.href && (
+              <a
+                href={site.resume.href}
+                download={site.resume.filename}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 text-sm text-mute transition-colors hover:text-accent"
+              >
+                <FileDown size={18} className="shrink-0 text-accent" />
+                {site.resume.label}
               </a>
             )}
           </motion.div>

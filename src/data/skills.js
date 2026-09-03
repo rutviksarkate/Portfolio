@@ -9,7 +9,6 @@ const skills = [
       'JavaScript',
       'HTML',
       'CSS',
-      'Ant Design',
     ],
   },
   {
@@ -23,13 +22,9 @@ const skills = [
   {
     category: 'Engineering & Infrastructure',
     items: [
-      'Docker',
       'Git',
       'CI/CD',
       'Swagger/OpenAPI',
-      'RabbitMQ',
-      'Kafka',
-      'CDN',
       'Authentication',
       'RBAC',
     ],

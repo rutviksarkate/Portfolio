@@ -20,13 +20,20 @@ export const site = {
   github: '',
   linkedin: '',
 
+  /** Served from /public. Update the file there when the resume changes. */
+  resume: {
+    href: '/Rutvik-Sarkate-Resume.pdf',
+    label: 'Download Resume',
+    filename: 'Rutvik-Sarkate-Resume.pdf',
+  },
+
   /**
    * Production site URL used for SEO canonical tags at build time.
    * Keep in sync with index.html once you have a real domain.
    */
   url: '',
 
-  availability: 'Available for freelance & contract projects',
+  availability: 'Open to freelance, contract, and full-time roles',
 
   hero: {
     eyebrow: 'Full-Stack Software Developer',
@@ -34,23 +41,23 @@ export const site = {
     supporting:
       'I build high-performance web applications, APIs, and business systems using modern JavaScript technologies.',
     techLine: ['React', 'Node.js', 'Express', 'MongoDB', 'PostgreSQL'],
-    primaryCta: { label: 'View My Work', href: '#projects' },
+    primaryCta: { label: 'View Experience', href: '#experience' },
     secondaryCta: { label: "Let's Work Together", href: '#contact' },
   },
 
   nav: [
-    { label: 'Home', href: '#home' },
-    { label: 'About', href: '#about' },
-    { label: 'Experience', href: '#experience' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Skills', href: '#skills' },
-    { label: 'Services', href: '#services' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Home', to: '/' },
+    { label: 'About', to: '/#about' },
+    { label: 'Experience', to: '/#experience' },
+    { label: 'Skills', to: '/#skills' },
+    { label: 'Services', to: '/#services' },
+    { label: 'Demos', to: '/demos' },
+    { label: 'Contact', to: '/#contact' },
   ],
 
   cta: {
     label: "Let's Talk",
-    href: '#contact',
+    href: '/#contact',
   },
 
   education: {
@@ -67,12 +74,13 @@ export const site = {
   },
 
   /**
-   * Contact form destination.
-   * Leave `endpoint` empty to use a mailto fallback (no fake “email sent” claim).
-   * To connect later: set endpoint to a Formspree, Getform, or API URL.
+   * Contact form delivery.
+   * Default: FormSubmit emails `site.email`. Confirm the first activation mail once.
+   * Optional: set `web3formsKey` (or VITE_WEB3FORMS_ACCESS_KEY) for Web3Forms.
+   * Optional: set `endpoint` to a custom JSON API instead.
    */
   form: {
     endpoint: '',
-    method: 'POST',
+    web3formsKey: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || '',
   },
 }

@@ -2,6 +2,10 @@
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-editorial: "Cormorant Garamond", Georgia, serif;
+  --font-product: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
   --color-canvas: #05060a;
   --color-surface: #0c0d12;
@@ -63,6 +67,25 @@ body {
     linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
     linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
   background-size: auto, 72px 72px, 72px 72px;
+}
+
+.demo-row {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(122 162 255 / 0.4) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
+.demo-row::-webkit-scrollbar {
+  height: 6px;
+}
+
+.demo-row::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.demo-row::-webkit-scrollbar-thumb {
+  background: rgb(122 162 255 / 0.35);
+  border-radius: 999px;
 }
 
 .image-zoom {

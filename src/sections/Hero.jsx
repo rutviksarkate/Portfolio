@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, FileDown } from 'lucide-react'
 import Button from '../components/Button.jsx'
 import { site } from '../config/site.js'
 import capabilities from '../data/capabilities.js'
@@ -59,6 +59,16 @@ export default function Hero() {
             <Button href={hero.secondaryCta.href} variant="secondary">
               {hero.secondaryCta.label}
             </Button>
+            {site.resume?.href && (
+              <Button
+                href={site.resume.href}
+                variant="secondary"
+                download={site.resume.filename}
+              >
+                <FileDown size={16} />
+                {site.resume.label}
+              </Button>
+            )}
           </motion.div>
 
           {site.availability && (

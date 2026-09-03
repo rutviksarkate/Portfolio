@@ -1,32 +1,38 @@
-import Footer from './components/Footer.jsx'
-import Navbar from './components/Navbar.jsx'
-import About from './sections/About.jsx'
-import Contact from './sections/Contact.jsx'
-import Experience from './sections/Experience.jsx'
-import Hero from './sections/Hero.jsx'
-import Process from './sections/Process.jsx'
-import Projects from './sections/Projects.jsx'
-import Services from './sections/Services.jsx'
-import Skills from './sections/Skills.jsx'
+import { useEffect } from 'react'
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
+import Demos from './pages/Demos.jsx'
+import Home from './pages/Home.jsx'
+import WorkDemo from './pages/WorkDemo.jsx'
+
+function ScrollToHash() {
+  const { pathname, hash } = useLocation()
+
+  useEffect(() => {
+    if (hash) {
+      const node = document.querySelector(hash)
+      if (node) {
+        const jump = () => node.scrollIntoView()
+        jump()
+        requestAnimationFrame(jump)
+        return
+      }
+    }
+    window.scrollTo(0, 0)
+  }, [pathname, hash])
+
+  return null
+}
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-canvas text-ink">
-      <a className="skip-link" href="#main">
-        Skip to content
-      </a>
-      <Navbar />
-      <main id="main">
-        <Hero />
-        <About />
-        <Experience />
-        <Projects />
-        <Skills />
-        <Services />
-        <Process />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <ScrollToHash />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/demos" element={<Demos />} />
+        <Route path="/work/:slug/:itemId" element={<WorkDemo />} />
+        <Route path="/work/:slug" element={<WorkDemo />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
