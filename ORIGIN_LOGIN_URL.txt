@@ -1,2 +1,0 @@
-https://cursor.com/loginDeepControl?challenge=zp6OC9gS7IaxipzJ983pJGqqf9f6emf1osfG3s3YcBY&uuid=2b3db039-5474-4a53-942a-7f62c9b2db23&mode=login&redirectTarget=origin
-Open this in your browser while logged into Cursor
