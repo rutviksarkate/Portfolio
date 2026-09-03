@@ -30,8 +30,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/demos" element={<Demos />} />
-        <Route path="/work/:slug/:itemId" element={<WorkDemo />} />
-        <Route path="/work/:slug" element={<WorkDemo />} />
+        <Route path="/work/:slug/:itemId?" element={<WorkDemo />} />
       </Routes>
     </BrowserRouter>
   )

@@ -94,7 +94,12 @@ export default function HarborShop() {
   const goShop = (nextCat) => {
     setView('shop')
     if (nextCat) setCat(nextCat)
-    navigate('/work/harbor-shop')
+    if (itemId) navigate('/work/harbor-shop')
+  }
+
+  const goSaved = () => {
+    setView('saved')
+    if (itemId) navigate('/work/harbor-shop')
   }
 
   return (
@@ -104,25 +109,34 @@ export default function HarborShop() {
       headerClass="border-[#1c1917]/10 bg-[#f4efe6]/90 text-[#1c1917]"
       linkClass="text-[#1c1917]/50 hover:text-[#1c1917]"
     >
-      <p className="border-b border-[#1c1917]/10 bg-[#1c1917] py-2 text-center text-[11px] tracking-[0.18em] text-[#f4efe6]">
+      <p className="relative z-30 border-b border-[#1c1917]/10 bg-[#1c1917] py-2 text-center text-[11px] tracking-[0.18em] text-[#f4efe6]">
         Autumn drop · Complimentary shipping over $250 · Code HARBOR10
       </p>
-      <div className="border-b border-[#1c1917]/10">
-        <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-5 py-4 lg:px-8">
-          <button type="button" onClick={() => goShop()} className="font-[family-name:var(--font-display)] text-2xl tracking-tight">
+      <div className="sticky top-14 z-40 border-b border-[#1c1917]/10 bg-[#f4efe6]/95 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-5 py-3 lg:px-8">
+          <button type="button" onClick={() => goShop('All')} className="font-[family-name:var(--font-display)] text-2xl tracking-tight">
             Harbor
           </button>
-          <nav className="hidden gap-8 text-[13px] tracking-wide md:flex">
+          <nav className="flex min-w-0 flex-1 items-center justify-end gap-3 overflow-x-auto text-[13px] tracking-wide sm:gap-6 md:justify-center">
             {CATS.slice(1).map((c) => (
-              <button key={c} type="button" onClick={() => goShop(c)} className="hover:opacity-60">
+              <button
+                key={c}
+                type="button"
+                onClick={() => goShop(c)}
+                className={`shrink-0 hover:opacity-60 ${view === 'shop' && !itemId && cat === c ? 'text-[#1c1917]' : 'text-[#1c1917]/50'}`}
+              >
                 {c}
               </button>
             ))}
-            <button type="button" onClick={() => { setView('saved'); navigate('/work/harbor-shop') }} className="hover:opacity-60">
+            <button
+              type="button"
+              onClick={goSaved}
+              className={`shrink-0 hover:opacity-60 ${view === 'saved' ? 'text-[#1c1917]' : 'text-[#1c1917]/50'}`}
+            >
               Saved {saved.length > 0 && `(${saved.length})`}
             </button>
           </nav>
-          <button type="button" onClick={() => setOpenCart(true)} className="inline-flex items-center gap-2 text-[13px]">
+          <button type="button" onClick={() => setOpenCart(true)} className="inline-flex shrink-0 items-center gap-2 text-[13px]">
             <ShoppingBag size={16} /> Bag {count > 0 && <span className="tabular-nums">({count})</span>}
           </button>
         </div>
@@ -155,7 +169,7 @@ export default function HarborShop() {
       ) : (
         <Catalog
           cat={cat}
-          setCat={setCat}
+          setCat={goShop}
           query={query}
           setQuery={setQuery}
           sort={sort}
@@ -168,8 +182,8 @@ export default function HarborShop() {
       )}
 
       {openCart && (
-        <div className="fixed inset-0 z-50 flex justify-end bg-[#1c1917]/40" onClick={() => setOpenCart(false)}>
-          <aside className="flex h-full w-full max-w-md flex-col bg-[#f4efe6] p-8" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 z-[80] flex justify-end bg-[#1c1917]/40" onClick={() => setOpenCart(false)}>
+          <aside className="relative z-[81] flex h-full w-full max-w-md flex-col bg-[#f4efe6] p-8" onClick={(e) => e.stopPropagation()}>
             <div className="mb-8 flex items-center justify-between">
               <h2 className="font-[family-name:var(--font-display)] text-2xl">Bag</h2>
               <button type="button" onClick={() => setOpenCart(false)} aria-label="Close bag"><X size={18} /></button>
@@ -224,108 +238,122 @@ export default function HarborShop() {
 
 function Catalog({ cat, setCat, query, setQuery, sort, setSort, visible, saved, onSave, onQuickAdd }) {
   return (
-    <>
-      <section className="mx-auto grid max-w-[1400px] items-end gap-10 px-5 py-16 lg:grid-cols-2 lg:px-8 lg:py-24">
+    <div className="relative z-10 mx-auto max-w-[1400px] px-5 pb-16 pt-6 lg:px-8">
+      <section className="grid items-end gap-4 lg:grid-cols-2">
         <div>
           <p className="text-[11px] uppercase tracking-[0.28em] text-[#9a5b3c]">Autumn objects</p>
-          <h1 className="mt-4 max-w-xl font-[family-name:var(--font-display)] text-5xl leading-[1.05] tracking-tight lg:text-7xl">
+          <h1 className="mt-2 max-w-xl font-[family-name:var(--font-display)] text-4xl leading-[1.05] tracking-tight sm:text-5xl">
             Quiet pieces for a slower room.
           </h1>
         </div>
         <p className="max-w-md text-sm leading-7 text-[#1c1917]/70 lg:justify-self-end">
-          A small house collection — lighting, seating, and carry — designed to last a decade, not a season. Save pieces, choose a finish, and check out as a guest.
+          A small house collection —{' '}
+          {['Lighting', 'Seating', 'Carry'].map((c, i) => (
+            <span key={c}>
+              {i > 0 && (i === 2 ? ', and ' : ', ')}
+              <button
+                type="button"
+                onClick={() => setCat(c)}
+                className="underline decoration-[#1c1917]/30 underline-offset-4 hover:text-[#1c1917]"
+              >
+                {c.toLowerCase()}
+              </button>
+            </span>
+          ))}
+          {' '}
+          — designed to last a decade, not a season. Save pieces, choose a finish, and check out as a guest.
         </p>
       </section>
 
-      <div className="mx-auto grid max-w-[1400px] gap-3 px-5 sm:grid-cols-2 lg:px-8">
-        {PRODUCTS.slice(0, 2).map((p) => (
-          <Link key={p.id} to={`/work/harbor-shop/${p.id}`} className="group relative min-h-[280px] overflow-hidden bg-[#e8e0d4]">
-            <img src={p.image} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#1c1917]/70 to-transparent" />
-            <div className="absolute bottom-6 left-6 text-[#f4efe6]">
-              <p className="text-[11px] uppercase tracking-[0.22em] opacity-70">Lookbook</p>
-              <p className="mt-2 font-[family-name:var(--font-display)] text-3xl">{p.name}</p>
-            </div>
-          </Link>
-        ))}
+      <div className="mt-8 flex flex-col gap-4 border-b border-[#1c1917]/10 pb-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex flex-wrap items-center gap-2">
+          {CATS.map((c) => (
+            <button
+              key={c}
+              type="button"
+              onClick={() => setCat(c)}
+              className={`rounded-full px-4 py-1.5 text-[12px] tracking-wide ${
+                cat === c ? 'bg-[#1c1917] text-[#f4efe6]' : 'border border-[#1c1917]/15 hover:border-[#1c1917]/40'
+              }`}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+        <div className="flex flex-wrap items-center gap-4">
+          <select value={sort} onChange={(e) => setSort(e.target.value)} className="bg-transparent text-[12px] outline-none">
+            {SORTS.map((s) => (
+              <option key={s.id} value={s.id}>{s.label}</option>
+            ))}
+          </select>
+          <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search the floor"
+            className="w-full border-b border-[#1c1917]/20 bg-transparent py-2 text-sm outline-none placeholder:text-[#1c1917]/35 sm:max-w-xs"
+          />
+        </div>
       </div>
 
-      <div className="mx-auto max-w-[1400px] px-5 pt-16 lg:px-8">
-        <div className="mb-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex flex-wrap gap-2">
-            {CATS.map((c) => (
-              <button
-                key={c}
-                type="button"
-                onClick={() => setCat(c)}
-                className={`rounded-full px-4 py-1.5 text-[12px] tracking-wide ${
-                  cat === c ? 'bg-[#1c1917] text-[#f4efe6]' : 'border border-[#1c1917]/15 hover:border-[#1c1917]/40'
-                }`}
-              >
-                {c}
-              </button>
-            ))}
-          </div>
-          <div className="flex flex-wrap items-center gap-4">
-            <select value={sort} onChange={(e) => setSort(e.target.value)} className="bg-transparent text-[12px] outline-none">
-              {SORTS.map((s) => (
-                <option key={s.id} value={s.id}>{s.label}</option>
-              ))}
-            </select>
-            <input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search the floor"
-              className="w-full border-b border-[#1c1917]/20 bg-transparent py-2 text-sm outline-none placeholder:text-[#1c1917]/35 sm:max-w-xs"
-            />
-          </div>
-        </div>
-
+      <div className="mt-8">
         {visible.length === 0 ? (
-          <p className="py-24 text-center text-sm text-[#1c1917]/50">Nothing matches that search.</p>
+          <p className="py-16 text-center text-sm text-[#1c1917]/50">Nothing matches that search.</p>
         ) : (
-          <div className="grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
             {visible.map((p) => (
               <article key={p.id} className="group">
-                <div className="relative">
+                <div className="relative isolate overflow-hidden bg-[#e8e0d4]">
                   <Link to={`/work/harbor-shop/${p.id}`} className="block">
-                    <div className="aspect-[4/5] overflow-hidden bg-[#e8e0d4]">
-                      <img src={p.image} alt={p.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]" />
+                    <div className="aspect-[4/5] overflow-hidden">
+                      <img src={p.image} alt={p.name} className="pointer-events-none h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]" />
                     </div>
                   </Link>
-                  <button type="button" onClick={() => onSave(p.id)} className="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center bg-[#f4efe6]/90" aria-label="Save">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      onSave(p.id)
+                    }}
+                    className="absolute right-3 top-3 z-20 flex h-9 w-9 items-center justify-center bg-[#f4efe6]/90"
+                    aria-label="Save"
+                  >
                     <Heart size={14} fill={saved.includes(p.id) ? 'currentColor' : 'none'} />
                   </button>
-                  <button type="button" onClick={() => onQuickAdd(p)} className="pointer-events-none absolute inset-x-3 bottom-3 z-10 bg-[#1c1917] py-2 text-[11px] tracking-wide text-[#f4efe6] opacity-0 transition group-hover:pointer-events-auto group-hover:opacity-100">
-                    Quick add
-                  </button>
                 </div>
-                <Link to={`/work/harbor-shop/${p.id}`} className="mt-4 flex items-baseline justify-between gap-3">
+                <Link to={`/work/harbor-shop/${p.id}`} className="mt-3 flex items-baseline justify-between gap-3">
                   <h2 className="font-[family-name:var(--font-display)] text-xl">{p.name}</h2>
                   <p className="text-[13px] tabular-nums">{money(p.price)}</p>
                 </Link>
                 <p className="mt-1 text-[12px] tracking-wide text-[#1c1917]/50">{p.maker} · {p.rating} ★ · {p.lead}</p>
+                <button
+                  type="button"
+                  onClick={() => onQuickAdd(p)}
+                  className="mt-2 text-[12px] tracking-wide text-[#1c1917]/70 underline decoration-[#1c1917]/25 underline-offset-4 hover:text-[#1c1917]"
+                >
+                  Quick add
+                </button>
               </article>
             ))}
           </div>
         )}
-
-        <footer className="mt-24 grid gap-10 border-t border-[#1c1917]/10 py-16 text-sm text-[#1c1917]/65 sm:grid-cols-3">
-          <div>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-[#9a5b3c]">Shipping</p>
-            <p className="mt-3 leading-7">Complimentary over $250. Packed in recycled board, no plastic fill.</p>
-          </div>
-          <div>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-[#9a5b3c]">Returns</p>
-            <p className="mt-3 leading-7">Thirty days, unused and in original wrap. Made-to-order seating is final sale.</p>
-          </div>
-          <div>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-[#9a5b3c]">Atelier</p>
-            <p className="mt-3 leading-7">Questions on finish or lead time — write the house. Replies within one working day.</p>
-          </div>
-        </footer>
       </div>
-    </>
+
+      <footer className="mt-16 grid gap-10 border-t border-[#1c1917]/10 py-12 text-sm text-[#1c1917]/65 sm:grid-cols-3">
+        <div>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-[#9a5b3c]">Shipping</p>
+          <p className="mt-3 leading-7">Complimentary over $250. Packed in recycled board, no plastic fill.</p>
+        </div>
+        <div>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-[#9a5b3c]">Returns</p>
+          <p className="mt-3 leading-7">Thirty days, unused and in original wrap. Made-to-order seating is final sale.</p>
+        </div>
+        <div>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-[#9a5b3c]">Atelier</p>
+          <p className="mt-3 leading-7">Questions on finish or lead time — write the house. Replies within one working day.</p>
+        </div>
+      </footer>
+    </div>
   )
 }
 
