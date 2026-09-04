@@ -303,6 +303,7 @@ export const independentProjects = [
     category: 'Real Estate Operations',
     image: '/projects/estatedesk.png',
     urlLabel: 'concept / estatedesk',
+    github: 'https://github.com/rutviksarkate/estatedesk-platform',
     description:
       'A modern operations platform concept for real estate teams: leads, inventory, bookings, and sales workflows in one workspace.',
     technologies: ['React', 'JavaScript', 'Node.js', 'Express', 'MongoDB', 'REST APIs'],
@@ -315,6 +316,7 @@ export const independentProjects = [
     category: 'Team Analytics',
     image: '/projects/pulseboard.png',
     urlLabel: 'concept / pulseboard',
+    github: 'https://github.com/rutviksarkate/pulseboard',
     description:
       'An analytics dashboard concept for distributed software teams. Figures in the screenshot are generated demo data, not production metrics.',
     technologies: ['React', 'Node.js', 'REST API', 'MongoDB'],
@@ -327,6 +329,7 @@ export const independentProjects = [
     category: 'Media Platform',
     image: '/projects/framevault.png',
     urlLabel: 'concept / framevault',
+    github: 'https://github.com/rutviksarkate/framevault',
     description:
       'A media library and streaming interface concept covering discovery, collections, and playback. Titles and artwork are original placeholders.',
     technologies: ['React', 'JavaScript', 'Responsive UI'],
@@ -339,6 +342,7 @@ export const independentProjects = [
     category: 'Developer Tools',
     image: '/projects/forge.png',
     urlLabel: 'concept / forge',
+    github: 'https://github.com/rutviksarkate/forge-workspace',
     description:
       'A coding workspace concept for practicing programming problems, with editor, tests, and submission state as an interface study.',
     technologies: ['React', 'JavaScript', 'Product UX'],

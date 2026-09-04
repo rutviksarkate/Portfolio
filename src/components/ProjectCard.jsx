@@ -54,6 +54,16 @@ export default function ProjectCard({ project, reversed = false }) {
       <div className="mt-5">
         <Chips items={project.technologies} />
       </div>
+      {project.github && (
+        <a
+          href={project.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-5 inline-flex w-fit text-sm text-ink underline decoration-line underline-offset-4 hover:decoration-accent"
+        >
+          View on GitHub
+        </a>
+      )}
     </div>
   )
 
