@@ -8,10 +8,7 @@ export default function Capabilities() {
   return (
     <section id="skills" className="border-t border-line py-20 lg:py-28">
       <Container>
-        <SectionHeading
-          title="What I Build"
-          subtitle="The stack is a means. The work is shipping software that holds up in production."
-        />
+        <SectionHeading title="What I Build" />
 
         <div className="grid gap-4 sm:grid-cols-2">
           {capabilities.map((cap, i) => (

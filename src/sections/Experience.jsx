@@ -6,10 +6,7 @@ export default function Experience() {
   return (
     <section id="experience" className="border-t border-line bg-surface/40 py-20 lg:py-28">
       <Container>
-        <SectionHeading
-          title="Experience"
-          subtitle="Roles, systems, and the work that can be verified."
-        />
+        <SectionHeading title="Experience" />
         <ExperienceTimeline />
       </Container>
     </section>

@@ -64,7 +64,7 @@ export const site = {
     heading: "Hi, I'm Rutvik.",
     body: [
       "I'm a full-stack software developer. I build web applications and SaaS products across the frontend, backend, and data layer, and I care about whether the result is actually usable.",
-      'My professional work has been on production systems: React applications, APIs, and the performance work between shipping a feature and making a page feel fast. At DePronto Infotech I worked on a large insurance platform and helped reduce page load time by about 40% through frontend optimization, lazy loading, CDN usage, and tighter application architecture.',
+      'Day to day that means production React applications, APIs, and the details that decide whether a feature feels quick or heavy. I like work that holds up after launch: clear interfaces, solid data flow, and software people can actually live in.',
       'I also build independent product concepts (operations tools, analytics dashboards, media interfaces, and developer workflows) to stay close to product thinking, not just tickets. If you have a product to ship or a system that needs to get faster, I can help.',
     ],
   },
@@ -107,7 +107,7 @@ export const proof = {
 export const experience = [
   {
     id: 'rhombuz',
-    role: 'Full Stack Developer',
+    role: 'Software Engineer',
     company: 'RhombuzDesigns Private Limited',
     period: 'Apr 2025 – Present',
     current: true,
