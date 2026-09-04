@@ -1,24 +1,31 @@
-import { lazy, Suspense, useEffect } from 'react'
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
+import { lazy, Suspense, useEffect, useRef } from 'react'
+import { BrowserRouter, Route, Routes, useLocation, useNavigationType } from 'react-router-dom'
+import { scrollToHash } from './lib/hashNav.js'
 import Home from './pages/Home.jsx'
 
 const NotFound = lazy(() => import('./pages/NotFound.jsx'))
 
 function ScrollToHash() {
   const { pathname, hash } = useLocation()
+  const navType = useNavigationType()
+  const didInit = useRef(false)
+  const prevPath = useRef(pathname)
 
   useEffect(() => {
-    if (hash) {
-      const node = document.querySelector(hash)
-      if (node) {
-        const jump = () => node.scrollIntoView()
-        jump()
-        requestAnimationFrame(jump)
-        return
-      }
+    const pathChanged = prevPath.current !== pathname
+    prevPath.current = pathname
+    const isFirst = !didInit.current
+    didInit.current = true
+
+    if (!isFirst && !pathChanged && navType !== 'POP') return
+
+    const jump = () => {
+      if (hash) scrollToHash(hash, 'auto')
+      else window.scrollTo(0, 0)
     }
-    window.scrollTo(0, 0)
-  }, [pathname, hash])
+    jump()
+    requestAnimationFrame(jump)
+  }, [pathname, hash, navType])
 
   return null
 }

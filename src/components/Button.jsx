@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 import cn from '../lib/cn.js'
+import HashLink from './HashLink.jsx'
+import { getHash } from '../lib/hashNav.js'
 
 const base =
   'inline-flex items-center justify-center gap-2 rounded-[10px] font-medium transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 disabled:opacity-50 disabled:pointer-events-none select-none'
@@ -28,10 +30,11 @@ export default function Button({
   if (href) {
     const isFile = Boolean(rest.download)
     if (!isFile && isInternal(href)) {
+      const LinkTag = getHash(href) ? HashLink : Link
       return (
-        <Link to={href} className={classes} {...rest}>
+        <LinkTag to={href} className={classes} {...rest}>
           {children}
-        </Link>
+        </LinkTag>
       )
     }
     return (

@@ -270,30 +270,6 @@ export const contactOptions = {
   timelines: ['ASAP', 'Within 1 month', '1–3 months', 'Flexible'],
 }
 
-export const professionalProject = {
-  title: 'Large-Scale Insurance Platform',
-  label: 'Professional Experience',
-  company: 'DePronto Infotech',
-  description:
-    'Worked on a production insurance web platform with a focus on frontend development, application performance and data flow.',
-  technologies: ['React.js', 'Redux', 'React Router', 'Ant Design', 'Lazy Loading', 'CDN'],
-  highlight: '40% faster page load',
-  caseStudy: {
-    problem:
-      'Application performance needed improvement, particularly around loading and frontend delivery.',
-    workedOn: [
-      'React application development',
-      'Redux data flow',
-      'React Router',
-      'Lazy loading',
-      'CDN optimization',
-      'Frontend performance improvements',
-      'Reusable UI implementation',
-    ],
-    result: 'Reduced page load time by approximately 40%.',
-  },
-}
-
 export const independentProjects = [
   {
     slug: 'estatedesk',

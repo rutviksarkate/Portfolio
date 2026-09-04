@@ -1,7 +1,7 @@
 import { FileDown, Github, Linkedin, Mail } from 'lucide-react'
-import { Link } from 'react-router-dom'
 import { site } from '../data/portfolio.js'
 import Container from './Container.jsx'
+import HashLink from './HashLink.jsx'
 
 const footerNav = [
   { label: 'Work', href: '/#work' },
@@ -29,12 +29,12 @@ export default function Footer() {
               <ul className="space-y-2">
                 {footerNav.map((link) => (
                   <li key={link.href}>
-                    <Link
+                    <HashLink
                       to={link.href}
                       className="text-sm text-mute transition-colors hover:text-ink"
                     >
                       {link.label}
-                    </Link>
+                    </HashLink>
                   </li>
                 ))}
               </ul>

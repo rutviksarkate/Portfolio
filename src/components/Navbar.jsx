@@ -1,6 +1,7 @@
 import { FileDown, Github, Linkedin, Menu, X } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import HashLink from './HashLink.jsx'
 import { site } from '../data/portfolio.js'
 import cn from '../lib/cn.js'
 import { useActiveSection, useScrolled } from '../lib/useActiveSection.js'
@@ -74,7 +75,7 @@ export default function Navbar() {
         <ul className="hidden items-center gap-0.5 lg:flex" role="list">
           {site.nav.map((link) => (
             <li key={link.href}>
-              <Link
+              <HashLink
                 to={link.href}
                 className={cn(
                   'rounded-lg px-3 py-1.5 text-[13px] font-medium transition-colors',
@@ -82,7 +83,7 @@ export default function Navbar() {
                 )}
               >
                 {link.label}
-              </Link>
+              </HashLink>
             </li>
           ))}
         </ul>
@@ -122,12 +123,12 @@ export default function Navbar() {
               Resume
             </a>
           )}
-          <Link
+          <HashLink
             to={site.cta.href}
             className="hidden rounded-[10px] bg-cream px-3.5 py-2 text-[13px] font-semibold text-canvas transition-colors hover:bg-ink sm:inline-flex"
           >
             {site.cta.label}
-          </Link>
+          </HashLink>
 
           <button
             type="button"
@@ -160,7 +161,7 @@ export default function Navbar() {
             <ul className="flex flex-col">
               {site.nav.map((link) => (
                 <li key={link.href}>
-                  <Link
+                  <HashLink
                     to={link.href}
                     onClick={close}
                     className={cn(
@@ -169,7 +170,7 @@ export default function Navbar() {
                     )}
                   >
                     {link.label}
-                  </Link>
+                  </HashLink>
                 </li>
               ))}
             </ul>
@@ -206,13 +207,13 @@ export default function Navbar() {
                 </a>
               )}
             </div>
-            <Link
+            <HashLink
               to={site.cta.href}
               onClick={close}
               className="mt-3 block rounded-[10px] bg-cream px-4 py-3 text-center text-sm font-semibold text-canvas"
             >
               {site.cta.label}
-            </Link>
+            </HashLink>
           </div>
         </div>
       )}

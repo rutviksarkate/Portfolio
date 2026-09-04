@@ -9,7 +9,6 @@ import Hero from '../sections/Hero.jsx'
 import IndependentBuilds from '../sections/IndependentBuilds.jsx'
 import Process from '../sections/Process.jsx'
 import ProofBar from '../sections/Proof.jsx'
-import SelectedWork from '../sections/SelectedWork.jsx'
 import Services from '../sections/Services.jsx'
 import { site } from '../data/portfolio.js'
 
@@ -27,10 +26,9 @@ export default function Home() {
       <main id="main">
         <Hero />
         <ProofBar />
-        <SelectedWork />
+        <IndependentBuilds />
         <Capabilities />
         <Experience />
-        <IndependentBuilds />
         <Process />
         <Services />
         <About />

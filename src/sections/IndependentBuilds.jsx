@@ -5,7 +5,7 @@ import { independentProjects } from '../data/portfolio.js'
 
 export default function IndependentBuilds() {
   return (
-    <section id="builds" className="border-t border-line py-20 lg:py-28">
+    <section id="work" className="border-t border-line py-20 lg:py-28">
       <Container>
         <SectionHeading
           title="Independent product builds"
