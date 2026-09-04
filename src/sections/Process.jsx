@@ -1,36 +1,34 @@
-import { motion } from 'framer-motion'
+import Container from '../components/Container.jsx'
+import Reveal from '../components/Reveal.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
-import processSteps from '../data/process.js'
-import { fadeUp, motionProps, stagger, usePrefersReducedMotion } from '../lib/useMotion.js'
+import { process } from '../data/portfolio.js'
 
 export default function Process() {
-  const reduced = usePrefersReducedMotion()
-
   return (
-    <section className="border-t border-line py-20 lg:py-28">
-      <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <SectionHeading label="Process" title="How I work." />
-
-        <motion.div
-          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
-          variants={stagger}
-          {...motionProps(reduced)}
-        >
-          {processSteps.map((step) => (
-            <motion.div
-              key={step.step}
-              variants={fadeUp}
-              className="rounded-xl border border-line bg-surface p-6 lg:p-8"
-            >
-              <span className="text-3xl font-bold text-accent/30">{step.step}</span>
-              <h3 className="mt-3 text-lg font-semibold text-ink">{step.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-mute">
-                {step.description}
-              </p>
-            </motion.div>
+    <section className="border-t border-line bg-surface/40 py-20 lg:py-28">
+      <Container>
+        <SectionHeading
+          title="From idea to shipped product."
+          subtitle="A practical path from messy requirements to something people can use."
+        />
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {process.map((step, i) => (
+            <Reveal key={step.step} delay={i * 0.06}>
+              <article className="relative h-full overflow-hidden rounded-[14px] border border-line bg-canvas p-6">
+                <span className="font-mono text-3xl font-semibold text-accent/35">{step.step}</span>
+                {i < process.length - 1 && (
+                  <span
+                    className="absolute right-4 top-8 hidden h-px w-8 bg-line lg:block"
+                    aria-hidden="true"
+                  />
+                )}
+                <h3 className="mt-6 text-lg font-semibold tracking-tight text-ink">{step.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-mute">{step.description}</p>
+              </article>
+            </Reveal>
           ))}
-        </motion.div>
-      </div>
+        </div>
+      </Container>
     </section>
   )
 }

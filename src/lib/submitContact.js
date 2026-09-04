@@ -1,4 +1,4 @@
-import { site } from '../config/site.js'
+import { site } from '../data/portfolio.js'
 
 const WEB3FORMS_URL = 'https://api.web3forms.com/submit'
 
@@ -6,9 +6,11 @@ function payload(values) {
   return {
     name: values.name.trim(),
     email: values.email.trim(),
-    inquiry: values.inquiryType,
-    message: values.message.trim(),
-    subject: `Portfolio inquiry — ${values.inquiryType}`,
+    projectType: values.projectType || 'Not specified',
+    budget: values.budget || 'Not specified',
+    timeline: values.timeline || 'Not specified',
+    message: values.message.trim() || '(No message provided)',
+    subject: `Portfolio inquiry - ${values.projectType || 'General'}`,
   }
 }
 
@@ -68,7 +70,9 @@ export async function submitContact(values) {
   await postJson(`https://formsubmit.co/ajax/${encodeURIComponent(site.email)}`, {
     name: fields.name,
     email: fields.email,
-    inquiry: fields.inquiry,
+    projectType: fields.projectType,
+    budget: fields.budget,
+    timeline: fields.timeline,
     message: fields.message,
     _subject: fields.subject,
     _template: 'table',

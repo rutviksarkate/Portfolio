@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#08090c"/>
+  <rect x="64" y="64" width="1072" height="502" rx="24" stroke="rgba(255,255,255,0.08)"/>
+  <text x="100" y="180" fill="#c9a46c" font-family="Manrope, Inter, system-ui, sans-serif" font-size="18" font-weight="600" letter-spacing="4">FULL-STACK SOFTWARE DEVELOPER</text>
+  <text x="100" y="280" fill="#f4f1ea" font-family="Manrope, Inter, system-ui, sans-serif" font-size="64" font-weight="700">Rutvik Sarkate</text>
+  <text x="100" y="350" fill="#9c9890" font-family="Manrope, Inter, system-ui, sans-serif" font-size="28">Building software that solves real problems.</text>
+  <text x="100" y="500" fill="#6d6a64" font-family="Manrope, Inter, system-ui, sans-serif" font-size="20">React · Node.js · JavaScript · APIs · Databases</text>
+</svg>

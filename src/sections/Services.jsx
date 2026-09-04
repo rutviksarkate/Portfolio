@@ -1,45 +1,34 @@
-import { motion } from 'framer-motion'
+import { ArrowRight } from 'lucide-react'
+import Button from '../components/Button.jsx'
+import Container from '../components/Container.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
 import ServiceCard from '../components/ServiceCard.jsx'
-import Button from '../components/Button.jsx'
-import services from '../data/services.js'
-import { fadeUp, motionProps, stagger, usePrefersReducedMotion } from '../lib/useMotion.js'
+import { services } from '../data/portfolio.js'
 
 export default function Services() {
-  const reduced = usePrefersReducedMotion()
-
   return (
-    <section id="services" className="border-t border-line bg-surface py-20 lg:py-28">
-      <div className="mx-auto max-w-7xl px-5 lg:px-8">
+    <section className="border-t border-line py-20 lg:py-28">
+      <Container>
         <SectionHeading
-          label="Services"
-          title="What I can build for you."
+          title="How I Can Help"
+          subtitle="Hire me to build the product, improve the one you have, or make it faster."
         />
-
-        <motion.div
-          className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
-          variants={stagger}
-          {...motionProps(reduced)}
-        >
-          {services.map((svc) => (
-            <ServiceCard
-              key={svc.id}
-              title={svc.title}
-              description={svc.description}
-              icon={svc.icon}
-            />
+        <div className="grid gap-4 sm:grid-cols-2">
+          {services.map((service, i) => (
+            <ServiceCard key={service.id} {...service} index={i} />
           ))}
-        </motion.div>
-
-        <motion.div
-          className="mt-14 text-center"
-          variants={fadeUp}
-          {...motionProps(reduced)}
-        >
-          <p className="mb-5 text-lg text-mute">Have a project in mind?</p>
-          <Button href="#contact">Let&apos;s Talk</Button>
-        </motion.div>
-      </div>
+        </div>
+        <div className="mt-12 flex flex-col items-start justify-between gap-4 rounded-[14px] border border-line bg-surface px-6 py-6 sm:flex-row sm:items-center sm:px-8">
+          <div>
+            <p className="text-lg font-semibold tracking-tight text-ink">Have a project in mind?</p>
+            <p className="mt-1 text-sm text-mute">Let&apos;s discuss it.</p>
+          </div>
+          <Button href="/#contact">
+            Start a Conversation
+            <ArrowRight size={16} />
+          </Button>
+        </div>
+      </Container>
     </section>
   )
 }

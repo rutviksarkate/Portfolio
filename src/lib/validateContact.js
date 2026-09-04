@@ -13,22 +13,9 @@ export function validateContact(values) {
     errors.email = 'Enter a valid email address.'
   }
 
-  if (!values.inquiryType) {
-    errors.inquiryType = 'Select why you are reaching out.'
-  }
-
-  if (!values.message.trim()) {
-    errors.message = 'Describe what you need.'
-  } else if (values.message.trim().length < 20) {
-    errors.message = 'Please add a bit more detail (20+ characters).'
+  if (values.message.trim() && values.message.trim().length < 10) {
+    errors.message = 'Add a little more detail so I can reply usefully.'
   }
 
   return errors
 }
-
-export const inquiryTypes = [
-  'Freelance project',
-  'Full-time role',
-  'Contract / consulting',
-  'Other',
-]

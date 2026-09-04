@@ -1,12 +1,20 @@
-import { Menu, X } from 'lucide-react'
+import { FileDown, Github, Linkedin, Menu, X } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { site } from '../config/site.js'
+import { site } from '../data/portfolio.js'
 import cn from '../lib/cn.js'
 import { useActiveSection, useScrolled } from '../lib/useActiveSection.js'
 
+const NAV_MAP = {
+  '/#work': 'work',
+  '/#experience': 'experience',
+  '/#skills': 'skills',
+  '/#about': 'about',
+  '/#contact': 'contact',
+}
+
 export default function Navbar() {
-  const scrolled = useScrolled(12)
+  const scrolled = useScrolled(16)
   const active = useActiveSection()
   const { pathname } = useLocation()
   const navigate = useNavigate()
@@ -39,52 +47,38 @@ export default function Navbar() {
     }
   }, [open, close])
 
-  const isActive = (to) => {
-    if (to === '/demos') return pathname === '/demos' || pathname.startsWith('/work/')
-    if (to === '/') return pathname === '/' && active === 'home'
+  const isActive = (href) => {
     if (pathname !== '/') return false
-    return active === to.replace('/#', '')
-  }
-
-  const onNavClick = (to) => (e) => {
-    if (to === '/') {
-      goHome(e)
-      return
-    }
-    close()
+    return active === NAV_MAP[href]
   }
 
   return (
-    <header
-      className={cn(
-        'fixed inset-x-0 top-0 z-50 transition-all duration-300',
-        scrolled
-          ? 'border-b border-line bg-canvas/80 backdrop-blur-lg'
-          : 'bg-transparent',
-      )}
-    >
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-4 sm:pt-4">
       <nav
-        className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 lg:px-8"
+        className={cn(
+          'pointer-events-auto mx-auto flex h-[3.6rem] max-w-[1120px] items-center justify-between rounded-2xl px-3 transition-all duration-300 sm:px-4',
+          scrolled
+            ? 'border border-line bg-canvas/75 shadow-[0_8px_40px_rgb(0_0_0_/_0.35)] backdrop-blur-xl'
+            : 'border border-transparent bg-transparent',
+        )}
         aria-label="Main navigation"
       >
         <Link
           to="/"
           onClick={goHome}
-          className="cursor-pointer text-lg font-bold text-ink"
+          className="shrink-0 px-1 text-[15px] font-semibold tracking-tight text-ink"
         >
           {site.name}
         </Link>
 
-        <ul className="hidden items-center gap-1 md:flex" role="menubar">
+        <ul className="hidden items-center gap-0.5 lg:flex" role="list">
           {site.nav.map((link) => (
-            <li key={link.to} role="none">
+            <li key={link.href}>
               <Link
-                to={link.to}
-                role="menuitem"
-                onClick={onNavClick(link.to)}
+                to={link.href}
                 className={cn(
-                  'rounded-md px-3 py-1.5 text-sm font-medium transition-colors',
-                  isActive(link.to) ? 'text-accent' : 'text-mute hover:text-ink',
+                  'rounded-lg px-3 py-1.5 text-[13px] font-medium transition-colors',
+                  isActive(link.href) ? 'text-ink' : 'text-mute hover:text-ink',
                 )}
               >
                 {link.label}
@@ -93,77 +87,133 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1 sm:gap-2">
+          {site.github && (
+            <a
+              href={site.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              className="hidden rounded-lg p-2 text-mute transition-colors hover:text-ink sm:inline-flex"
+            >
+              <Github size={16} />
+            </a>
+          )}
+          {site.linkedin && (
+            <a
+              href={site.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="hidden rounded-lg p-2 text-mute transition-colors hover:text-ink sm:inline-flex"
+            >
+              <Linkedin size={16} />
+            </a>
+          )}
           {site.resume?.href && (
             <a
               href={site.resume.href}
               download={site.resume.filename}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden text-sm font-medium text-mute transition-colors hover:text-ink md:inline-flex"
+              className="hidden items-center gap-1.5 rounded-lg px-2 py-2 text-[13px] font-medium text-mute transition-colors hover:text-ink md:inline-flex"
             >
+              <FileDown size={14} />
               Resume
             </a>
           )}
           <Link
             to={site.cta.href}
-            className="hidden rounded-lg bg-accent px-4 py-2 text-sm font-medium text-canvas transition-colors hover:bg-accent-strong md:inline-flex"
+            className="hidden rounded-[10px] bg-cream px-3.5 py-2 text-[13px] font-semibold text-canvas transition-colors hover:bg-ink sm:inline-flex"
           >
             {site.cta.label}
           </Link>
 
           <button
-            onClick={() => setOpen(!open)}
-            className="inline-flex items-center justify-center rounded-lg p-2 text-mute transition-colors hover:text-ink md:hidden"
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className="inline-flex items-center justify-center rounded-lg p-2 text-mute transition-colors hover:text-ink lg:hidden"
             aria-expanded={open}
-            aria-label="Toggle navigation menu"
+            aria-controls="mobile-menu"
+            aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
           >
-            {open ? <X size={22} /> : <Menu size={22} />}
+            {open ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </nav>
 
       {open && (
-        <div className="border-t border-line bg-canvas/95 backdrop-blur-lg md:hidden">
-          <ul className="flex flex-col gap-1 px-5 py-4">
-            {site.nav.map((link) => (
-              <li key={link.to}>
-                <Link
-                  to={link.to}
-                  onClick={onNavClick(link.to)}
-                  className={cn(
-                    'block rounded-md px-3 py-2.5 text-sm font-medium transition-colors',
-                    isActive(link.to) ? 'text-accent' : 'text-mute hover:text-ink',
-                  )}
+        <div
+          id="mobile-menu"
+          className="pointer-events-auto lg:hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile navigation"
+        >
+          <button
+            type="button"
+            className="fixed inset-0 bg-canvas/60 backdrop-blur-sm"
+            aria-label="Close menu"
+            onClick={close}
+          />
+          <div className="absolute inset-x-3 top-[4.4rem] rounded-2xl border border-line bg-surface/95 p-3 shadow-[0_20px_60px_rgb(0_0_0_/_0.45)] backdrop-blur-xl sm:inset-x-4">
+            <ul className="flex flex-col">
+              {site.nav.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    to={link.href}
+                    onClick={close}
+                    className={cn(
+                      'block rounded-xl px-3 py-3 text-sm font-medium',
+                      isActive(link.href) ? 'bg-elevated text-ink' : 'text-mute hover:text-ink',
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-2 flex items-center gap-2 border-t border-line px-2 pt-3">
+              {site.github && (
+                <a
+                  href={site.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-lg p-2 text-mute hover:text-ink"
+                  aria-label="GitHub"
                 >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-            {site.resume?.href && (
-              <li>
+                  <Github size={18} />
+                </a>
+              )}
+              {site.linkedin && (
+                <a
+                  href={site.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-lg p-2 text-mute hover:text-ink"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin size={18} />
+                </a>
+              )}
+              {site.resume?.href && (
                 <a
                   href={site.resume.href}
                   download={site.resume.filename}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={close}
-                  className="block rounded-md px-3 py-2.5 text-sm font-medium text-mute transition-colors hover:text-ink"
+                  className="rounded-lg px-2 py-2 text-sm text-mute hover:text-ink"
                 >
                   Resume
                 </a>
-              </li>
-            )}
-            <li className="pt-2">
-              <Link
-                to={site.cta.href}
-                onClick={close}
-                className="block rounded-lg bg-accent px-4 py-2.5 text-center text-sm font-medium text-canvas transition-colors hover:bg-accent-strong"
-              >
-                {site.cta.label}
-              </Link>
-            </li>
-          </ul>
+              )}
+            </div>
+            <Link
+              to={site.cta.href}
+              onClick={close}
+              className="mt-3 block rounded-[10px] bg-cream px-4 py-3 text-center text-sm font-semibold text-canvas"
+            >
+              {site.cta.label}
+            </Link>
+          </div>
         </div>
       )}
     </header>

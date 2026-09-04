@@ -1,27 +1,28 @@
-import { Gauge, Layers, LayoutDashboard, Server } from 'lucide-react'
-import { motion } from 'framer-motion'
-import { fadeUp } from '../lib/useMotion.js'
+import { Gauge, Layers, LayoutDashboard, Wrench } from 'lucide-react'
+import Reveal from './Reveal.jsx'
 
 const icons = {
   layout: LayoutDashboard,
   stack: Layers,
-  server: Server,
+  wrench: Wrench,
   gauge: Gauge,
 }
 
-export default function ServiceCard({ title, description, icon }) {
+export default function ServiceCard({ title, description, icon, index }) {
   const Icon = icons[icon] || Layers
 
   return (
-    <motion.div
-      variants={fadeUp}
-      className="group flex flex-col rounded-xl border border-line bg-surface p-6 transition-colors duration-300 hover:border-accent/25 lg:p-8"
-    >
-      <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-lg bg-accent-dim text-accent">
-        <Icon size={22} />
-      </div>
-      <h3 className="mb-2 text-lg font-semibold text-ink">{title}</h3>
-      <p className="text-sm leading-relaxed text-mute">{description}</p>
-    </motion.div>
+    <Reveal delay={index * 0.06} className="h-full">
+      <article className="group flex h-full flex-col rounded-[14px] border border-line bg-surface p-6 transition-colors duration-300 hover:border-line-strong lg:p-7">
+        <div className="mb-5 flex items-center justify-between">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent-dim text-accent">
+            <Icon size={18} />
+          </div>
+          <span className="font-mono text-[11px] text-faint">0{index + 1}</span>
+        </div>
+        <h3 className="text-lg font-semibold tracking-tight text-ink">{title}</h3>
+        <p className="mt-2 text-sm leading-relaxed text-mute">{description}</p>
+      </article>
+    </Reveal>
   )
 }

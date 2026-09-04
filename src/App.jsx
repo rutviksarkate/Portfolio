@@ -1,8 +1,8 @@
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
-import Demos from './pages/Demos.jsx'
 import Home from './pages/Home.jsx'
-import WorkDemo from './pages/WorkDemo.jsx'
+
+const NotFound = lazy(() => import('./pages/NotFound.jsx'))
 
 function ScrollToHash() {
   const { pathname, hash } = useLocation()
@@ -23,15 +23,24 @@ function ScrollToHash() {
   return null
 }
 
+function RouteFallback() {
+  return (
+    <div className="grid min-h-screen place-items-center bg-canvas text-sm text-mute">
+      Loading…
+    </div>
+  )
+}
+
 export default function App() {
   return (
     <BrowserRouter>
       <ScrollToHash />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/demos" element={<Demos />} />
-        <Route path="/work/:slug/:itemId?" element={<WorkDemo />} />
-      </Routes>
+      <Suspense fallback={<RouteFallback />}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   )
 }

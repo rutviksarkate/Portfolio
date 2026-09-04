@@ -1,65 +1,75 @@
-import { motion } from 'framer-motion'
-import SectionHeading from '../components/SectionHeading.jsx'
-import { site } from '../config/site.js'
-import { fadeUp, motionProps, stagger, usePrefersReducedMotion } from '../lib/useMotion.js'
-
-const stats = [
-  { label: 'Started professional software career', value: '2023' },
-  { label: 'Engineering CGPA', value: site.education.cgpa },
-  { label: 'Frontend + Backend', value: 'Full Stack' },
-  { label: 'Development → Deployment', value: 'Production' },
-]
+import { FileDown, Github, Linkedin } from 'lucide-react'
+import Container from '../components/Container.jsx'
+import Reveal from '../components/Reveal.jsx'
+import { site } from '../data/portfolio.js'
 
 export default function About() {
-  const reduced = usePrefersReducedMotion()
-
   return (
-    <section id="about" className="border-t border-line bg-surface py-20 lg:py-28">
-      <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <SectionHeading
-          label="About"
-          title="Building software with a focus on performance, reliability and business value."
-        />
-
-        <motion.div
-          className="grid gap-10 lg:grid-cols-2 lg:gap-16"
-          variants={stagger}
-          {...motionProps(reduced)}
-        >
-          <motion.div variants={fadeUp} className="max-w-xl space-y-4 text-mute">
-            <p className="leading-relaxed">
-              I&apos;m a full-stack software developer based in India with professional experience building web applications, REST APIs, and production business systems.
-            </p>
-            <p className="leading-relaxed">
-              I work across the stack — from React on the frontend to Node.js and Express on the backend, with MongoDB and PostgreSQL for data. My focus extends beyond writing features: I work on performance, deployment, authentication, and making sure the systems I build are reliable in production.
-            </p>
-            <p className="leading-relaxed">
-              I graduated with a {site.education.cgpa} CGPA in Computer Science from {site.education.school} ({site.education.graduated}).
-            </p>
-          </motion.div>
-
-          <motion.div
-            className="grid grid-cols-2 gap-4"
-            variants={stagger}
-            {...motionProps(reduced)}
-          >
-            {stats.map((s) => (
-              <motion.div
-                key={s.value}
-                variants={fadeUp}
-                className="rounded-xl border border-line bg-canvas p-5"
-              >
-                <span className="text-2xl font-bold text-accent lg:text-3xl">
-                  {s.value}
-                </span>
-                <p className="mt-1.5 text-xs leading-snug text-mute sm:text-sm">
-                  {s.label}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
-      </div>
+    <section id="about" className="border-t border-line bg-surface/40 py-20 lg:py-28">
+      <Container>
+        <div className="grid items-start gap-10 lg:grid-cols-[auto_1fr] lg:gap-16">
+          <Reveal>
+            <div
+              className="grid h-24 w-24 place-items-center rounded-2xl border border-line bg-elevated text-3xl font-semibold text-ink sm:h-28 sm:w-28"
+              aria-hidden="true"
+            >
+              {site.shortName}
+            </div>
+          </Reveal>
+          <div className="max-w-2xl">
+            <Reveal>
+              <h2 className="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+                {site.about.heading}
+              </h2>
+            </Reveal>
+            <div className="mt-6 space-y-4">
+              {site.about.body.map((p) => (
+                <Reveal key={p.slice(0, 24)}>
+                  <p className="text-base leading-relaxed text-mute">{p}</p>
+                </Reveal>
+              ))}
+            </div>
+            <Reveal delay={0.08}>
+              <div className="mt-8 flex flex-wrap gap-4">
+                {site.github && (
+                  <a
+                    href={site.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm text-mute transition-colors hover:text-ink"
+                  >
+                    <Github size={16} />
+                    GitHub
+                  </a>
+                )}
+                {site.linkedin && (
+                  <a
+                    href={site.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm text-mute transition-colors hover:text-ink"
+                  >
+                    <Linkedin size={16} />
+                    LinkedIn
+                  </a>
+                )}
+                {site.resume?.href && (
+                  <a
+                    href={site.resume.href}
+                    download={site.resume.filename}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm text-mute transition-colors hover:text-ink"
+                  >
+                    <FileDown size={16} />
+                    Resume
+                  </a>
+                )}
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </Container>
     </section>
   )
 }

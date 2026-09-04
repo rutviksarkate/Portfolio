@@ -1,78 +1,107 @@
-import { ArrowUp, FileDown, Github, Linkedin, Mail, Phone } from 'lucide-react'
-import { site } from '../config/site.js'
+import { FileDown, Github, Linkedin, Mail } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { site } from '../data/portfolio.js'
+import Container from './Container.jsx'
+
+const footerNav = [
+  { label: 'Work', href: '/#work' },
+  { label: 'Experience', href: '/#experience' },
+  { label: 'About', href: '/#about' },
+  { label: 'Contact', href: '/#contact' },
+]
 
 export default function Footer() {
   return (
     <footer className="border-t border-line bg-surface">
-      <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-5 py-10 sm:flex-row sm:justify-between lg:px-8">
-        <p className="text-sm text-mute">
-          &copy; {new Date().getFullYear()} {site.name}. All rights reserved.
-        </p>
+      <Container className="py-12 lg:py-16">
+        <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-sm">
+            <p className="text-base font-semibold tracking-tight text-ink">{site.name}</p>
+            <p className="mt-1 text-sm text-mute">{site.title}</p>
+            <p className="mt-4 text-sm leading-relaxed text-faint">{site.footer.line}</p>
+          </div>
 
-        <div className="flex items-center gap-4">
-          {site.email && (
-            <a
-              href={`mailto:${site.email}`}
-              aria-label="Email"
-              className="text-mute transition-colors hover:text-accent"
-            >
-              <Mail size={18} />
-            </a>
-          )}
-          {site.phone && (
-            <a
-              href={site.phoneHref}
-              aria-label="Phone"
-              className="text-mute transition-colors hover:text-accent"
-            >
-              <Phone size={18} />
-            </a>
-          )}
-          {site.github && (
-            <a
-              href={site.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub"
-              className="text-mute transition-colors hover:text-accent"
-            >
-              <Github size={18} />
-            </a>
-          )}
-          {site.linkedin && (
-            <a
-              href={site.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              className="text-mute transition-colors hover:text-accent"
-            >
-              <Linkedin size={18} />
-            </a>
-          )}
-          {site.resume?.href && (
-            <a
-              href={site.resume.href}
-              download={site.resume.filename}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={site.resume.label}
-              className="text-mute transition-colors hover:text-accent"
-            >
-              <FileDown size={18} />
-            </a>
-          )}
-
-          <button
-            type="button"
-            aria-label="Back to top"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="ml-2 flex h-8 w-8 items-center justify-center rounded-full border border-line text-mute transition-colors hover:border-accent/40 hover:text-accent"
-          >
-            <ArrowUp size={15} />
-          </button>
+          <div className="flex flex-wrap gap-12">
+            <div>
+              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-faint">
+                Navigate
+              </p>
+              <ul className="space-y-2">
+                {footerNav.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      to={link.href}
+                      className="text-sm text-mute transition-colors hover:text-ink"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-faint">
+                Connect
+              </p>
+              <ul className="space-y-2">
+                <li>
+                  <a
+                    href={`mailto:${site.email}`}
+                    className="inline-flex items-center gap-2 text-sm text-mute transition-colors hover:text-ink"
+                  >
+                    <Mail size={14} />
+                    {site.email}
+                  </a>
+                </li>
+                {site.github && (
+                  <li>
+                    <a
+                      href={site.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm text-mute transition-colors hover:text-ink"
+                    >
+                      <Github size={14} />
+                      GitHub
+                    </a>
+                  </li>
+                )}
+                {site.linkedin && (
+                  <li>
+                    <a
+                      href={site.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm text-mute transition-colors hover:text-ink"
+                    >
+                      <Linkedin size={14} />
+                      LinkedIn
+                    </a>
+                  </li>
+                )}
+                {site.resume?.href && (
+                  <li>
+                    <a
+                      href={site.resume.href}
+                      download={site.resume.filename}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm text-mute transition-colors hover:text-ink"
+                    >
+                      <FileDown size={14} />
+                      Resume
+                    </a>
+                  </li>
+                )}
+              </ul>
+            </div>
+          </div>
         </div>
-      </div>
+
+        <p className="mt-12 border-t border-line pt-6 text-xs text-faint">
+          © {new Date().getFullYear()} {site.name}. All rights reserved.
+        </p>
+      </Container>
     </footer>
   )
 }
