@@ -17,7 +17,7 @@ export const site = {
    * Replace these with your real profile URLs.
    */
   github: 'https://github.com/rutviksarkate',
-  linkedin: 'https://www.linkedin.com/in/rutviksarkate',
+  linkedin: 'https://www.linkedin.com/in/rutvik-sarkate-364927214/',
 
   resume: {
     href: '/Rutvik-Sarkate-Resume.pdf',
@@ -95,12 +95,12 @@ export const site = {
 export const proof = {
   title: 'Built for production. Designed for people.',
   supporting:
-    'Improved performance on a production insurance platform through frontend optimization, lazy loading, CDN usage and improved application architecture.',
+    'I work across frontend, backend, and data, with a preference for software that stays usable after it ships.',
   items: [
-    { value: '40%', label: 'Reduction in page load time', featured: true },
-    { value: 'React', label: 'Production frontend experience', featured: false },
-    { value: 'Full-Stack', label: 'Frontend + backend development', featured: false },
-    { value: 'Remote', label: 'Comfortable working with distributed teams', featured: false },
+    { value: 'React', label: 'Production frontend experience' },
+    { value: 'Full-Stack', label: 'Frontend + backend development' },
+    { value: 'APIs', label: 'Auth, data flow, and integrations' },
+    { value: 'Remote', label: 'Comfortable with distributed teams' },
   ],
 }
 
@@ -126,11 +126,9 @@ export const experience = [
     current: false,
     highlights: [
       'Built production frontend for a life-insurance web platform using JavaScript, React, Redux, React Router, HTML, CSS, and Ant Design.',
-      'Worked on application performance, data flow, lazy loading, and CDN-backed frontend delivery.',
+      'Worked on application performance, data flow, lazy loading, and CDN-backed frontend delivery, including a reduction in page load time.',
       'Collaborated with cross-functional teams on responsive, user-friendly interfaces in an agile sprint environment.',
     ],
-    achievement:
-      'Reduced page load time by approximately 40% through optimized coding practices, React architecture, lazy loading, and CDN usage.',
   },
   {
     id: 'smartsa',
